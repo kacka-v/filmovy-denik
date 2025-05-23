@@ -1,4 +1,4 @@
-const binId = '6830ccef8960c979a5a048ef';
+const binId = '6830cef38a456b7966a487db';
 const apiKey = '$2a$10$LZN36onOi89Sk2f8utU/1eTCQzArXTncqIw8fujmsjflHNh./6.O.';
 const url = `https://api.jsonbin.io/v3/b/${binId}/latest`;
 
