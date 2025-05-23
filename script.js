@@ -1,5 +1,5 @@
-const binId = 'TVŮJ_BIN_ID';
-const apiKey = 'TVŮJ_API_KLÍČ';
+const binId = '6830ccef8960c979a5a048ef';
+const apiKey = '$2a$10$LZN36onOi89Sk2f8utU/1eTCQzArXTncqIw8fujmsjflHNh./6.O.';
 const url = `https://api.jsonbin.io/v3/b/${binId}/latest`;
 
 fetch(url, {
