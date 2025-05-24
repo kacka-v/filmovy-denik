@@ -1,19 +1,26 @@
-<script>
-  function updateProgress() {
-    const checkboxes = document.querySelectorAll('.seen-checkbox');
-    const total = checkboxes.length;
-    const seen = Array.from(checkboxes).filter(cb => cb.checked).length;
-    const percent = total === 0 ? 0 : Math.round((seen / total) * 100);
+const binId = '6830ccef8960c979a5a048ef';
+const binId = '6830cef38a456b7966a487db';
+const apiKey = '$2a$10$LZN36onOi89Sk2f8utU/1eTCQzArXTncqIw8fujmsjflHNh./6.O.';
+const url = `https://api.jsonbin.io/v3/b/${binId}/latest`;
 
-    document.getElementById('seen-count').textContent = seen;
-    document.getElementById('total-count').textContent = total;
-    document.getElementById('seen-percent').textContent = `${percent}%`;
-    document.getElementById('progress-bar').style.width = `${percent}%`;
-  }
+fetch(url, {
+headers: {
+'X-Master-Key': apiKey
+}
+})
+.then(response => response.json())
+.then(data => {
+const films = data.record;
+const filmList = document.getElementById('film-list');
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const checkboxes = document.querySelectorAll('.seen-checkbox');
-    checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
-    updateProgress(); // init
-  });
-</script>
+films.forEach(film => {
+const card = document.createElement('div');
+card.className = 'film-card';
+
+const img = document.createElement('img');
+img.src = film.image;
+img.alt = film.title;
+
+const link = document.createElement('a');
+link.href = film.csfd;
+link.target = '_blank';
