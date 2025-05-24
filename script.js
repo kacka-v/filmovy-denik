@@ -15,6 +15,7 @@ fetch(url, {
     films.forEach(film => {
       const card = document.createElement('div');
       card.className = 'film-card';
+      if (film.seen) card.classList.add('seen');
 
       const img = document.createElement('img');
       img.src = film.image;
@@ -33,15 +34,9 @@ fetch(url, {
       checkbox.type = 'checkbox';
       checkbox.checked = film.seen;
 
-      if (film.seen) card.classList.add('seen');
-
       checkbox.addEventListener('change', () => {
         film.seen = checkbox.checked;
-        if (checkbox.checked) {
-          card.classList.add('seen');
-        } else {
-          card.classList.remove('seen');
-        }
+        card.classList.toggle('seen', checkbox.checked);
         updateData(films);
       });
 
@@ -52,7 +47,6 @@ fetch(url, {
       card.appendChild(overlay);
       card.appendChild(link);
       card.appendChild(label);
-
       filmList.appendChild(card);
     });
   })
