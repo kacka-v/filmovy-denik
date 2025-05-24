@@ -1,16 +1,11 @@
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 20px;
-  background: linear-gradient(to bottom, #0f0f0f 0%, #1c1c1c 100%);
-  background-image: 
-    url('https://cdn.jsdelivr.net/gh/kognise/water.css/static/film-grain.png'),
-    url('https://img.freepik.com/free-photo/assortment-cinema-elements-red-background-with-copy-space_23-2148457848.jpg?semt=ais_hybrid&w=740');
-  background-repeat: repeat, no-repeat;
-  background-size: auto, cover;
-  background-position: center top;
-  color: #f5f5f5;
-}
+background: linear-gradient(to bottom, #0f0f0f 0%, #1c1c1c 100%);
+background-image: 
+  url('https://cdn.jsdelivr.net/gh/kognise/water.css/static/film-grain.png'),
+  url('https://img.freepik.com/free-photo/assortment-cinema-elements-red-background-with-copy-space_23-2148457848.jpg?semt=ais_hybrid&w=740');
+background-repeat: repeat, no-repeat;
+background-size: auto, cover;
+background-position: center top;
+
 
 .progress-container {
   margin: 20px auto;
