@@ -20,6 +20,9 @@ fetch(url, {
       img.src = film.image;
       img.alt = film.title;
 
+      const overlay = document.createElement('div');
+      overlay.className = 'overlay';
+
       const link = document.createElement('a');
       link.href = film.csfd;
       link.target = '_blank';
@@ -29,8 +32,16 @@ fetch(url, {
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.checked = film.seen;
+
+      if (film.seen) card.classList.add('seen');
+
       checkbox.addEventListener('change', () => {
         film.seen = checkbox.checked;
+        if (checkbox.checked) {
+          card.classList.add('seen');
+        } else {
+          card.classList.remove('seen');
+        }
         updateData(films);
       });
 
@@ -38,6 +49,7 @@ fetch(url, {
       label.appendChild(document.createTextNode('Viděno'));
 
       card.appendChild(img);
+      card.appendChild(overlay);
       card.appendChild(link);
       card.appendChild(label);
 
