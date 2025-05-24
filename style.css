@@ -1,11 +1,63 @@
-background: linear-gradient(to bottom, #0f0f0f 0%, #1c1c1c 100%);
-background-image: 
-  url('https://cdn.jsdelivr.net/gh/kognise/water.css/static/film-grain.png'),
-  url('https://img.freepik.com/free-photo/assortment-cinema-elements-red-background-with-copy-space_23-2148457848.jpg?semt=ais_hybrid&w=740');
-background-repeat: repeat, no-repeat;
-background-size: auto, cover;
-background-position: center top;
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+  background-color: #fafafa;
+}
 
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#films-container {
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.film {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: 180px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+}
+
+.film.seen {
+  background-color: #d4f7d4;
+}
+
+.film img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.film a {
+  font-weight: bold;
+  color: #0066cc;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.film a:hover {
+  text-decoration: underline;
+}
+
+.film label {
+  font-size: 0.9em;
+  user-select: none;
+  cursor: pointer;
+}
 
 .progress-container {
   margin: 20px auto;
