@@ -4,11 +4,177 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Filmový deník</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .progress-container {
+      margin: 20px auto;
+      width: 80%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .progress-label {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+
+    .film-strip {
+      width: 100%;
+      height: 30px;
+      background: repeating-linear-gradient(
+        -45deg,
+        #ccc,
+        #ccc 10px,
+        #999 10px,
+        #999 20px
+      );
+      border: 2px solid #444;
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background-color: #4caf50;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .film-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .film {
+      background: white;
+      border-radius: 8px;
+      padding: 10px;
+      width: 200px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .film:hover {
+      transform: scale(1.03);
+    }
+
+    .film img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .film a {
+      display: block;
+      font-weight: bold;
+      margin: 10px 0 5px;
+      text-decoration: none;
+      color: #222;
+    }
+
+    .film label {
+      display: block;
+      margin-top: 5px;
+    }
+
+    .film.seen {
+      opacity: 0.6;
+    }
+  </style>
 </head>
 <body>
-  <h1>🎬 Můj filmový deník</h1>
-  <div id="film-list"></div>
-  <script src="script.js"></script>
+  <h1>Filmový deník</h1>
+
+  <div class="progress-container">
+    <div class="progress-label">
+      Viděno <span id="seen-count">0</span> z <span id="total-count">0</span> filmů – <span id="seen-percent">0%</span>
+    </div>
+    <div class="film-strip">
+      <div id="progress-bar"></div>
+    </div>
+  </div>
+
+  <div class="film-list" id="film-list"></div>
+
+  <script>
+    const apiKey = "$2a$10$LZN36onOi89Sk2f8utU/1eTCQzArXTncqIw8fujmsjflHNh./6.O.";
+    const binId = "6830cef38a456b7966a487db";
+    const filmList = document.getElementById("film-list");
+
+    async function fetchFilms() {
+      const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+        headers: {
+          "X-Master-Key": apiKey
+        }
+      });
+      const data = await res.json();
+      return data.record;
+    }
+
+    function updateProgress() {
+      const checkboxes = document.querySelectorAll('.seen-checkbox');
+      const total = checkboxes.length;
+      const seen = Array.from(checkboxes).filter(cb => cb.checked).length;
+      const percent = total === 0 ? 0 : Math.round((seen / total) * 100);
+
+      document.getElementById('seen-count').textContent = seen;
+      document.getElementById('total-count').textContent = total;
+      document.getElementById('seen-percent').textContent = `${percent}%`;
+      document.getElementById('progress-bar').style.width = `${percent}%`;
+
+      checkboxes.forEach(cb => {
+        const filmDiv = cb.closest(".film");
+        if (cb.checked) {
+          filmDiv.classList.add("seen");
+        } else {
+          filmDiv.classList.remove("seen");
+        }
+      });
+    }
+
+    function createFilmElement(film) {
+      const div = document.createElement("div");
+      div.className = "film";
+
+      div.innerHTML = `
+        <img src="${film.image}" alt="${film.name}">
+        <a href="${film.link}" target="_blank">${film.name}</a>
+        <label>
+          <input type="checkbox" class="seen-checkbox"> Viděno
+        </label>
+      `;
+
+      const checkbox = div.querySelector(".seen-checkbox");
+      checkbox.addEventListener("change", updateProgress);
+
+      return div;
+    }
+
+    async function init() {
+      const films = await fetchFilms();
+      films.forEach(film => {
+        const el = createFilmElement(film);
+        filmList.appendChild(el);
+      });
+      updateProgress();
+    }
+
+    init();
+  </script>
 </body>
 </html>
